@@ -306,4 +306,107 @@ git config --global init.defaultBranch master
 
 ---
 
+## 八、实际操作案例
+
+### 8.1 案例一：v0.6.0 版本多仓库同步推送（2026-05-14）
+
+**背景：** 完成 v0.6.0 运维增强功能，涉及三个仓库的代码更新。
+
+#### 步骤 1：backend 仓库提交推送
+```bash
+cd backend
+git add .
+git commit -m "feat: add operation enhancement features including audit log, executor group, schedule log, health check, and report"
+git push origin main
+```
+
+#### 步骤 2：frontend 仓库提交推送
+```bash
+cd frontend
+git add .
+git commit -m "feat: add operation views including audit log list, executor group manager, and operation dashboard"
+git push origin main
+```
+
+#### 步骤 3：deploy 仓库提交推送
+```bash
+cd deploy
+git add .
+git commit -m "docs: add v0.6.0 iteration requirements document and update iteration plan"
+git push origin main
+```
+
+---
+
+### 8.2 案例二：分支统一（main → master）
+
+**背景：** 项目决定统一使用 master 分支作为主分支。
+
+#### backend 仓库处理
+```bash
+cd backend
+git checkout master
+git merge main
+git push origin master
+git branch -d main  # 删除本地 main 分支
+```
+
+#### frontend 仓库处理
+```bash
+cd frontend
+git checkout master
+git merge main
+git push origin master
+git branch -d main
+```
+
+#### deploy 仓库处理
+```bash
+cd deploy
+git checkout master
+git merge main
+git push origin master
+git branch -d main
+```
+
+---
+
+### 8.3 案例三：添加文档并推送（当前操作）
+
+**背景：** 新增 Git 工作流规范文档。
+
+```bash
+cd deploy
+# 创建并编辑文档
+# ... 编辑 docs/03-技术文档/04-Git工作流规范.md
+
+# 添加并提交
+git add docs/03-技术文档/04-Git工作流规范.md
+git commit -m "docs: add Git workflow specification document"
+
+# 推送到远程
+git push origin master
+```
+
+---
+
+### 8.4 验证远程分支状态
+
+```bash
+# 查看远程分支情况
+git ls-remote -h origin
+
+# 示例输出：
+# 4254d8d32a6a29375ddde1c4b67a2fa079601c07	refs/heads/main
+# 4254d8d32a6a29375ddde1c4b67a2fa079601c07	refs/heads/master
+
+# 查看本地状态
+git status
+# On branch master
+# Your branch is up to date with 'origin/master'.
+```
+
+---
+
 *文档创建时间：2026-05-14*
+*最后更新：2026-05-14*
